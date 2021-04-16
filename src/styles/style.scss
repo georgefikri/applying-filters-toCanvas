@@ -1,0 +1,12 @@
+.filter-buttons {
+  position: absolute;
+  top: 600px;
+}
+
+.canvas-wrapper {
+  .canvas-container,
+  canvas {
+    width: auto !important;
+    height: 768px !important;
+  }
+}

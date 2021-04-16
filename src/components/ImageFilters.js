@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { fabric } from "fabric";
+import '../styles/style.scss'
 
 function ImageFilter() {
     /* storing button value to distinguish which filter to apply*/ 
@@ -16,6 +17,13 @@ function ImageFilter() {
         file = e.target.files[0]
         canvasWrite(reader)
         reader.readAsDataURL(file);
+        // setting dimensions of canvas
+        let c = document.getElementById("canvas");
+        c.width = 1000; 
+        c.height = 1000; 
+        c.style.width = window.innerWidth + 'px';
+        c.style.height = window.innerHeight + 'px';
+
     
     }
 
@@ -90,13 +98,13 @@ function ImageFilter() {
 
 
     return (
-        <div>
+        <div className='canvas-wrapper'>
             <input 
                 onChange={(e)=> onChange(e)} 
                 type="file" 
                 id="uploadedImg"/>
 
-            <canvas id="canvas" style={{height: '500px', width: '600px' }}></canvas>
+            <canvas id="canvas"></canvas>
 
             <div className='filter-buttons'>
                 <button 

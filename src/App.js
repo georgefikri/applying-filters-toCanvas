@@ -1,5 +1,3 @@
-import './styles/style.css'
-
 import { ImageFilters} from './components'
 
 function App() {
