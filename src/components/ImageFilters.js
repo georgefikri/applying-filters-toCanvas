@@ -8,7 +8,7 @@ function ImageFilter() {
     /* storing onChange  */
     const [changeEvent, setchangeEvent] = useState()
 
-    let src,canvas,reader,file;
+    let src,canvas,reader,file,c;
 
     const onChange = (e)=> {
         setchangeEvent(e)
@@ -18,12 +18,11 @@ function ImageFilter() {
         canvasWrite(reader)
         reader.readAsDataURL(file);
         // setting dimensions of canvas
-        let c = document.getElementById("canvas");
-        c.width = 1000; 
-        c.height = 1000; 
-        c.style.width = window.innerWidth + 'px';
-        c.style.height = window.innerHeight + 'px';
-
+         c = document.getElementById("canvas");
+         c.width = 1000; 
+         c.height = 500; 
+         c.style.width = window.innerWidth + 'px';
+         c.style.height = window.innerHeight + 'px';
     
     }
 
@@ -98,34 +97,45 @@ function ImageFilter() {
 
 
     return (
-        <div className='canvas-wrapper'>
-            <input 
-                onChange={(e)=> onChange(e)} 
-                type="file" 
-                id="uploadedImg"/>
+        <div className='d-flex'>
+            <div className='canvas-wrapper'>
+                <div className='file-upload-wrapper'>
+                    <input 
+                        onChange={(e)=> onChange(e)} 
+                        type="file" 
+                        id="uploadedImg"
+                        className="file-upload-field"
+                        />
+                </div>
 
-            <canvas id="canvas"></canvas>
 
-            <div className='filter-buttons'>
-                <button 
-                    onClick={()=> setButtonString('Vintage')}
-                    disabled={changeEvent === undefined}>
-                        Vintage
-                </button>
-                <button 
-                    onClick={()=> setButtonString('grayscale')}
-                    disabled={changeEvent === undefined}>
-                        apply grayscale</button>
-                <button 
-                    onClick={()=> setButtonString('blur')}
-                    disabled={changeEvent === undefined}>
-                        apply blur</button>
-                <button 
-                    onClick={(e)=> download(e)}
-                    disabled={changeEvent === undefined}>
-                    download
-                </button>
-            </div>
+                <canvas id="canvas"></canvas>
+        </div>
+
+        <div className='filter-buttons'>
+                    <button 
+                        onClick={()=> setButtonString('Vintage')}
+                        disabled={changeEvent === undefined}
+                        className={buttonString === 'Vintage' &&  'active'}
+                        >
+                            Vintage
+                    </button>
+                    <button 
+                        onClick={()=> setButtonString('grayscale')}
+                        disabled={changeEvent === undefined}
+                        className={buttonString === 'grayscale' &&  'active'}>
+                             Grayscale</button>
+                    <button 
+                        onClick={()=> setButtonString('blur')}
+                        disabled={changeEvent === undefined}
+                        className={buttonString === 'blur' &&  'active'}>
+                             Blur</button>
+                    <button 
+                        onClick={(e)=> download(e)}
+                        disabled={changeEvent === undefined}>
+                        Download
+                    </button>
+                </div>
     </div>
     )
 }

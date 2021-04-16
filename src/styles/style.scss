@@ -1,12 +1,160 @@
+@import "./variables.scss";
+
 .filter-buttons {
-  position: absolute;
-  top: 600px;
+  flex-grow: 1;
+  @media screen and (min-width: 769px) {
+    display: inline-grid;
+    justify-content: flex-end;
+    button {
+      flex-grow: 1;
+      display: grid;
+      align-content: center;
+      margin-bottom: 10px;
+      margin-top: 20px;
+      height: 90px !important;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  margin-top: 20px;
+  button {
+    border-radius: 0;
+    background-color: $green_pine;
+    border: 0;
+    color: $white;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 80px;
+    &:disabled {
+      cursor: not-allowed;
+      background-color: $grey_link_water;
+      color: $grey_rolling_stone;
+    }
+    &:focus,
+    &:active {
+      outline: none;
+    }
+    &.active {
+      background-color: $green_dark;
+    }
+  }
+}
+
+.d-flex {
+  display: flex;
 }
 
 .canvas-wrapper {
+  flex-grow: 4;
   .canvas-container,
   canvas {
-    width: auto !important;
-    height: 768px !important;
+    width: 100% !important;
+    // height: 500px !important;
+  }
+
+  canvas {
+    height: 500px !important;
+  }
+
+  .file-upload-wrapper {
+    $defaultColor: $green_pine;
+    $height: 60px;
+    position: relative;
+    width: 60%;
+    height: $height;
+    margin: 20px auto;
+
+    &:after {
+      content: attr(data-text);
+      font-size: 18px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: $grey_link_water;
+      padding: 10px 15px;
+      display: block;
+      width: calc(100% - 40px);
+      pointer-events: none;
+      z-index: 20;
+      height: $height - 20px;
+      line-height: $height - 20px;
+      color: $grey_nobel;
+      border-radius: 5px 10px 10px 5px;
+      font-weight: 300;
+    }
+
+    &:before {
+      content: "Upload";
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: inline-block;
+      height: 60px;
+      background: $defaultColor;
+      color: $white;
+      font-weight: 700;
+      z-index: 25;
+      font-size: 16px;
+      line-height: $height;
+      padding: 0 15px;
+      text-transform: uppercase;
+      pointer-events: none;
+      border-radius: 0 5px 5px 0;
+    }
+
+    &:hover {
+      &:before {
+        background: darken($defaultColor, 10%);
+      }
+    }
+    input {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 99;
+      height: $height - 20px;
+      margin: 0;
+      padding: 0;
+      display: block;
+      cursor: pointer;
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .d-flex {
+    display: block;
+  }
+  .canvas-wrapper {
+    canvas {
+      width: 80% !important;
+    }
+    .canvas-container {
+      height: 500px !important;
+      overflow: hidden;
+    }
+    .file-upload-wrapper {
+      width: 80%;
+    }
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .filter-buttons {
+    button {
+      margin-left: 10px;
+      margin-right: 10px;
+      height: auto;
+      min-height: 80px;
+      margin-bottom: 20px;
+      min-width: 80px;
+    }
   }
 }
