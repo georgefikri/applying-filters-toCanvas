@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { fabric } from "fabric";
 
 function Tests4() {
-    const [removeFilter, setRemoveFilter] = useState('')
-    const [greyScaleBoolean, setGreyScaleBoolean] = useState('')
-    const [blurBoolean,setBlurBoolean] = useState('')
+    const [buttonString, setButtonString] = useState('')
     const [changeEvent, setchangeEvent] = useState()
     let src
     let canvas
@@ -30,16 +28,18 @@ function Tests4() {
 
             console.log('filters before', img.filters)
             // add filter
-            img.filters.push(new fabric.Image.filters.Vintage());
+            // img.filters.push(new fabric.Image.filters.Vintage());
             
             // setTimeout(() => {
             //     img.filters.splice(0,img.filters.length)
             // }, 2000);
-            if(removeFilter === 'remove') {
-                img.filters.splice(0,img.filters.length)
-
+            if(buttonString === 'Vintage') {
+                img.filters.shift()
+                img.filters.push(new fabric.Image.filters.Vintage());
+                // img.filters.splice(0,img.filters.length)
+                // new fabric.Image()
             } 
-            else if (greyScaleBoolean === 'grayscale') {
+            else if (buttonString === 'grayscale') {
 
                 // img.filters.splice(0,img.filters.length)
                 // img.filters.push(new fabric.Image.filters.Grayscale())
@@ -48,7 +48,7 @@ function Tests4() {
                 img.filters.push(new fabric.Image.filters.Grayscale())
                 console.log('grayscale', img.filters)
 
-            } else if (blurBoolean === 'blur') {
+            } else if (buttonString === 'blur') {
 
                 // img.filters.splice(0,img.filters.length)
                 // img.filters.push(new fabric.Image.filters.Blur({
@@ -80,11 +80,11 @@ function Tests4() {
 }
 
     useEffect(() => {
-        if(removeFilter === 'remove' || greyScaleBoolean === 'grayscale' || blurBoolean === 'blur') {
+        if(buttonString === 'Vintage' || buttonString === 'grayscale' || buttonString === 'blur') {
             onChange(changeEvent)
             console.log('inside useeffect')
         }
-    }, [removeFilter, greyScaleBoolean, blurBoolean])
+    }, [buttonString])
 
 
     // console.log('removeFilter', removeFilter)
@@ -121,16 +121,16 @@ function Tests4() {
 
             <div className='filter-buttons'>
                 <button 
-                    onClick={()=> setRemoveFilter('remove')}
+                    onClick={()=> setButtonString('Vintage')}
                     disabled={changeEvent === undefined}>
-                        remove filters
+                        Vintage
                 </button>
                 <button 
-                    onClick={()=> setGreyScaleBoolean('grayscale')}
+                    onClick={()=> setButtonString('grayscale')}
                     disabled={changeEvent === undefined}>
                         apply grayscale</button>
                 <button 
-                    onClick={()=> setBlurBoolean('blur')}
+                    onClick={()=> setButtonString('blur')}
                     disabled={changeEvent === undefined}>
                         apply blur</button>
                 <button 
