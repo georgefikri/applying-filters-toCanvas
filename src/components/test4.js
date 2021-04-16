@@ -11,7 +11,6 @@ function Tests4() {
     let reader 
     let file
     const onChange = (e)=> {
-        console.log('dddd', e)
         setchangeEvent(e)
         canvas = new fabric.Canvas('canvas');
         reader = new FileReader();
@@ -39,9 +38,10 @@ function Tests4() {
                 console.log('it is true')
                 img.filters.splice(0,img.filters.length)
             } else if (greyScaleBoolean) {
-                // img.filters.splice(0,img.filters.length)
+                img.filters.splice(0,img.filters.length)
                 img.filters.push(new fabric.Image.filters.Grayscale())
             } else if (blurBoolean) {
+                img.filters.splice(0,img.filters.length)
                 img.filters.push(new fabric.Image.filters.Blur({
                      blur: 0.5
                 }));
@@ -52,7 +52,6 @@ function Tests4() {
             canvas.add(img);
             // canvas.requestRenderAll();
             canvas.renderAll()
-            console.log('filters', img.filters)
 
           });
 
@@ -68,10 +67,15 @@ function Tests4() {
     useEffect(() => {
         if(removeFilter || greyScaleBoolean || blurBoolean) {
             onChange(changeEvent)
+
         }
     }, [removeFilter, greyScaleBoolean, blurBoolean])
 
-    console.log('change event', changeEvent)
+    console.log('removeFilter', removeFilter)
+    console.log('greyScaleBoolean', greyScaleBoolean)
+    console.log('blurBoolean', blurBoolean)
+
+
     return (
         <div>
             <input 
@@ -81,9 +85,11 @@ function Tests4() {
 
             <canvas id="canvas" style={{height: '500px', width: '600px' }}></canvas>
 
-            <button onClick={()=> setRemoveFilter(true)}>remove filters</button>
-            <button onClick={()=> setGreyScaleBoolean(true)}>apply grayscale</button>
-            <button onClick={()=> setBlurBoolean(true)}>apply blur</button>
+            <div className='filter-buttons'>
+                <button onClick={()=> setRemoveFilter(true)}>remove filters</button>
+                <button onClick={()=> setGreyScaleBoolean(true)}>apply grayscale</button>
+                <button onClick={()=> setBlurBoolean(true)}>apply blur</button>
+            </div>
     </div>
     )
 }
