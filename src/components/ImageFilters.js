@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { fabric } from "fabric";
 
 function ImageFilter() {
+    /* storing button value to distinguish which filter to apply*/ 
     const [buttonString, setButtonString] = useState('')
+    /* storing onChange  */
     const [changeEvent, setchangeEvent] = useState()
-    let src
-    let canvas
-    let reader 
-    let file
+
+    let src,canvas,reader,file;
+
     const onChange = (e)=> {
         setchangeEvent(e)
         canvas = new fabric.Canvas('canvas');
@@ -19,7 +20,6 @@ function ImageFilter() {
     }
 
    const canvasWrite = (reader, filterType) => { 
-    console.log('filterType', filterType)
     reader.onload = function (event){
         var imgObj = new Image();
         imgObj.src = event.target.result;
