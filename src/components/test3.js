@@ -2,22 +2,42 @@ import React, { useEffect, useState } from 'react'
 import { fabric } from "fabric";
 
 function Tests3() {
-
     const [greyScaleBoolean, setGreyScaleBoolean] = useState(false)
-    
+    const [blurBoolean, setBlurBoolean] = useState(false)
+
     let src
     var canvas
+    let reader = new FileReader();
 
+    const onChange = (e)=> {
+        canvas = new fabric.Canvas('canvas');
+           reader = new FileReader();
+           canvasWrite(reader)
+             reader.readAsDataURL(e.target.files[0]);
+    
+   }
 
-    const canvasWrite = (reader) => {
+    const canvasWrite = (reader, filterType) => { 
+        console.log('filterType', filterType)
         reader.onload = function (event){
             var imgObj = new Image();
             imgObj.src = event.target.result;
-            src = imgObj.src = event.target.result;
+            src = event.target.result;
             fabric.Image.fromURL(src, function(img) {
 
                 // add filter
-                    img.filters.push(new fabric.Image.filters.Grayscale());
+                if(filterType === 'Vintage') {
+                    console.log('inside vintage')
+                    // img.filters.push(new fabric.Image.filters.RemoveColor({
+                    //     threshold: 0.2,
+                    //   }));
+                    img.filters.push(new fabric.Image.filters.Vintage());
+                } else if(filterType === 'Vintage') {
+                    img.filters.push(new fabric.Image.filters.Blur({
+                        blur: 0.5
+                    }));
+                }
+                    // img.filters.push(new fabric.Image.filters.Grayscale());
                     // img.filters.push(new fabric.Image.filters.Grayscale());
                     // img.filters.push(new fabric.Image.filters.Vintage());
                     // img.filters.push(new fabric.Image.filters.Blur({
@@ -25,42 +45,30 @@ function Tests3() {
                     //   }));
                 img.applyFilters();
                 canvas.add(img);
-                canvas.renderAll();
+                canvas.requestRenderAll();
               });
+
+              fabric.util.createClass(fabric.Image.filters.BaseFilter, { 
+                applyTo: {
+                    webgl: true
+                }
+             });
+             
           }
     }
 
-    const onChange = (e)=> {
-         canvas = new fabric.Canvas('canvas');
-            var reader = new FileReader();
-            canvasWrite(reader)
-              reader.readAsDataURL(e.target.files[0]);
-     
-    }
+  
 
     useEffect(() => {
         if(greyScaleBoolean) {
-            console.log('goa el if condition')
-            var reader = new FileReader();
-            reader.onload = function (event){
-                var imgObj = new Image();
-                imgObj.src = event.target.result;
-                src = imgObj.src = event.target.result;
-                fabric.Image.fromURL(src, function(img) {
-
-                    // add filter
-                        img.filters.push(
-                            new fabric.Image.filters.Sepia()
-                            );
-                  
-                    // apply filters and re-render canvas when done
-                    img.applyFilters();
-                    // add image onto canvas (it also re-render the canvas)
-                    canvas.add(img);
-                  });
-              }
+            console.log('goa useeffect')
+            canvasWrite(reader, 'Vintage')
+        } else if (blurBoolean) {
+            canvasWrite(reader, 'blur')
         }
-    }, [greyScaleBoolean])
+
+        console.log('greyScaleBoolean', greyScaleBoolean)
+    }, [greyScaleBoolean, src])
     
     return (
         <div>
@@ -69,8 +77,12 @@ function Tests3() {
 
         <canvas id="canvas" style={{height: '500px', width: '600px' }}></canvas>
         <button 
-        onClick={(e)=> console.log('eeee', e)}
-        >Grayscale</button>
+        onClick={(e)=> setGreyScaleBoolean(true)}
+        >Vintage</button>
+
+        <button 
+        onClick={(e)=> setBlurBoolean(true)}
+        >Blur</button>
     </div>
     )
 }

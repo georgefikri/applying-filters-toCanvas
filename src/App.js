@@ -1,14 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 
-import {Fabric, TestFabric, Test3} from './components'
+import {Fabric, TestFabric, Test3, Test4} from './components'
 
 function App() {
   return (
     <div className="App">
       {/* <TestFabric /> */}
       {/* <Fabric /> */}
-      <Test3 />
+      {/* <Test3 /> */}
+      <Test4 />
     </div>
   );
 }
