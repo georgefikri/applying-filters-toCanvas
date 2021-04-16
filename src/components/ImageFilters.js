@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { fabric } from "fabric";
 
-function Tests4() {
+function ImageFilter() {
     const [buttonString, setButtonString] = useState('')
     const [changeEvent, setchangeEvent] = useState()
     let src
@@ -27,33 +27,22 @@ function Tests4() {
         fabric.Image.fromURL(src, function(img) {
 
             console.log('filters before', img.filters)
-            // add filter
-            // img.filters.push(new fabric.Image.filters.Vintage());
-            
-            // setTimeout(() => {
-            //     img.filters.splice(0,img.filters.length)
-            // }, 2000);
             if(buttonString === 'Vintage') {
                 img.filters.shift()
                 img.filters.push(new fabric.Image.filters.Vintage());
-                // img.filters.splice(0,img.filters.length)
-                // new fabric.Image()
+                
+                /* remove all effect JIC it's asked to be done
+                    img.filters.splice(0,img.filters.length)
+                    new fabric.Image()
+                 */
             } 
             else if (buttonString === 'grayscale') {
 
-                // img.filters.splice(0,img.filters.length)
-                // img.filters.push(new fabric.Image.filters.Grayscale())
-                // img.filters.splice(0,1,new fabric.Image.filters.Grayscale())
                 img.filters.shift()
                 img.filters.push(new fabric.Image.filters.Grayscale())
                 console.log('grayscale', img.filters)
 
             } else if (buttonString === 'blur') {
-
-                // img.filters.splice(0,img.filters.length)
-                // img.filters.push(new fabric.Image.filters.Blur({
-                //     blur: 0.5
-                // }));
                 img.filters.shift()
                 img.filters.push(new fabric.Image.filters.Blur({
                     blur: 0.5
@@ -65,18 +54,10 @@ function Tests4() {
 
             img.applyFilters();
             canvas.add(img);
-            // canvas.requestRenderAll();
             canvas.renderAll()
 
-          });
-
-        //   fabric.util.createClass(fabric.Image.filters.BaseFilter, { 
-        //     applyTo: {
-        //         webgl: true
-        //     }
-        //  });
-         
-      }
+        });
+    }
 }
 
     useEffect(() => {
@@ -84,12 +65,10 @@ function Tests4() {
             onChange(changeEvent)
             console.log('inside useeffect')
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [buttonString])
 
 
-    // console.log('removeFilter', removeFilter)
-    // console.log('greyScaleBoolean', greyScaleBoolean)
-    // console.log('blurBoolean', blurBoolean)
 
     console.log('changeEvent', changeEvent)
 
@@ -104,7 +83,7 @@ function Tests4() {
 
     link.setAttribute("href", image);
     link.setAttribute("download", 'filtered-image');
-    link.click();
+    link.click();    
 
 
     }
@@ -143,5 +122,5 @@ function Tests4() {
     )
 }
 
-export const Test4 = Tests4
+export const ImageFilters = ImageFilter
 
