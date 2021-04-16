@@ -3,11 +3,11 @@ import { fabric } from "fabric";
 
 function Tests4() {
     const [removeFilter, setRemoveFilter] = useState(false)
-    const [greyScaleBoolean, setGreyScaleBoolean] = useState(false)
-    const [blurBoolean,setBlurBoolean] = useState(false)
+    const [greyScaleBoolean, setGreyScaleBoolean] = useState('')
+    const [blurBoolean,setBlurBoolean] = useState('')
     const [changeEvent, setchangeEvent] = useState()
     let src
-    var canvas
+    let canvas
     let reader 
     let file
     const onChange = (e)=> {
@@ -27,6 +27,7 @@ function Tests4() {
         imgObj.src = event.target.result;
         src = event.target.result;
         fabric.Image.fromURL(src, function(img) {
+
             console.log('filters before', img.filters)
             // add filter
             img.filters.push(new fabric.Image.filters.Vintage());
@@ -35,16 +36,23 @@ function Tests4() {
             //     img.filters.splice(0,img.filters.length)
             // }, 2000);
             if(removeFilter) {
-                console.log('it is true')
                 img.filters.splice(0,img.filters.length)
-            } else if (greyScaleBoolean) {
-                img.filters.splice(0,img.filters.length)
-                img.filters.push(new fabric.Image.filters.Grayscale())
-            } else if (blurBoolean) {
-                img.filters.splice(0,img.filters.length)
-                img.filters.push(new fabric.Image.filters.Blur({
-                     blur: 0.5
+            } else if (greyScaleBoolean === 'grayscale') {
+                // img.filters.splice(0,img.filters.length)
+                // img.filters.push(new fabric.Image.filters.Grayscale())
+                img.filters.splice(0,1,new fabric.Image.filters.Grayscale())
+
+                console.log('grayscale', img.filters)
+            } else if (blurBoolean === 'blur') {
+                // img.filters.splice(0,img.filters.length)
+                // img.filters.push(new fabric.Image.filters.Blur({
+                //     blur: 0.5
+                // }));
+                img.filters.splice(0,1,new fabric.Image.filters.Blur({
+                    blur: 0.5
                 }));
+                console.log('blur', img.filters)
+
             }
 
 
@@ -65,15 +73,33 @@ function Tests4() {
 }
 
     useEffect(() => {
-        if(removeFilter || greyScaleBoolean || blurBoolean) {
+        if(removeFilter || greyScaleBoolean === 'grayscale' || blurBoolean === 'blur') {
             onChange(changeEvent)
 
         }
     }, [removeFilter, greyScaleBoolean, blurBoolean])
 
-    console.log('removeFilter', removeFilter)
-    console.log('greyScaleBoolean', greyScaleBoolean)
-    console.log('blurBoolean', blurBoolean)
+    // console.log('removeFilter', removeFilter)
+    // console.log('greyScaleBoolean', greyScaleBoolean)
+    // console.log('blurBoolean', blurBoolean)
+    console.log('changeEvent', changeEvent)
+
+
+    const download = (e)=> {
+    let getCanvasById =  document.getElementById("canvas");
+    var image = getCanvasById.toDataURL("image/jpg");
+    console.log('img canvas', image)
+
+    var link = document.createElement("a");
+
+    document.body.appendChild(link); // for Firefox
+
+    link.setAttribute("href", image);
+    link.setAttribute("download", 'filtered-image');
+    link.click();
+
+
+    }
 
 
     return (
@@ -87,8 +113,11 @@ function Tests4() {
 
             <div className='filter-buttons'>
                 <button onClick={()=> setRemoveFilter(true)}>remove filters</button>
-                <button onClick={()=> setGreyScaleBoolean(true)}>apply grayscale</button>
-                <button onClick={()=> setBlurBoolean(true)}>apply blur</button>
+                <button onClick={()=> setGreyScaleBoolean('grayscale')}>apply grayscale</button>
+                <button onClick={()=> setBlurBoolean('blur')}>apply blur</button>
+                <button onClick={(e)=> download(e)}>
+                    download
+                </button>
             </div>
     </div>
     )
