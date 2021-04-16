@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { fabric } from "fabric";
 
 function Tests4() {
-    const [removeFilter, setRemoveFilter] = useState(false)
+    const [removeFilter, setRemoveFilter] = useState('')
     const [greyScaleBoolean, setGreyScaleBoolean] = useState('')
     const [blurBoolean,setBlurBoolean] = useState('')
     const [changeEvent, setchangeEvent] = useState()
@@ -35,20 +35,27 @@ function Tests4() {
             // setTimeout(() => {
             //     img.filters.splice(0,img.filters.length)
             // }, 2000);
-            if(removeFilter) {
+            if(removeFilter === 'remove') {
                 img.filters.splice(0,img.filters.length)
-            } else if (greyScaleBoolean === 'grayscale') {
+
+            } 
+            else if (greyScaleBoolean === 'grayscale') {
+
                 // img.filters.splice(0,img.filters.length)
                 // img.filters.push(new fabric.Image.filters.Grayscale())
-                img.filters.splice(0,1,new fabric.Image.filters.Grayscale())
-
+                // img.filters.splice(0,1,new fabric.Image.filters.Grayscale())
+                img.filters.shift()
+                img.filters.push(new fabric.Image.filters.Grayscale())
                 console.log('grayscale', img.filters)
+
             } else if (blurBoolean === 'blur') {
+
                 // img.filters.splice(0,img.filters.length)
                 // img.filters.push(new fabric.Image.filters.Blur({
                 //     blur: 0.5
                 // }));
-                img.filters.splice(0,1,new fabric.Image.filters.Blur({
+                img.filters.shift()
+                img.filters.push(new fabric.Image.filters.Blur({
                     blur: 0.5
                 }));
                 console.log('blur', img.filters)
@@ -63,27 +70,28 @@ function Tests4() {
 
           });
 
-          fabric.util.createClass(fabric.Image.filters.BaseFilter, { 
-            applyTo: {
-                webgl: true
-            }
-         });
+        //   fabric.util.createClass(fabric.Image.filters.BaseFilter, { 
+        //     applyTo: {
+        //         webgl: true
+        //     }
+        //  });
          
       }
 }
 
     useEffect(() => {
-        if(removeFilter || greyScaleBoolean === 'grayscale' || blurBoolean === 'blur') {
+        if(removeFilter === 'remove' || greyScaleBoolean === 'grayscale' || blurBoolean === 'blur') {
             onChange(changeEvent)
-
+            console.log('inside useeffect')
         }
     }, [removeFilter, greyScaleBoolean, blurBoolean])
+
 
     // console.log('removeFilter', removeFilter)
     // console.log('greyScaleBoolean', greyScaleBoolean)
     // console.log('blurBoolean', blurBoolean)
-    console.log('changeEvent', changeEvent)
 
+    console.log('changeEvent', changeEvent)
 
     const download = (e)=> {
     let getCanvasById =  document.getElementById("canvas");
@@ -112,10 +120,22 @@ function Tests4() {
             <canvas id="canvas" style={{height: '500px', width: '600px' }}></canvas>
 
             <div className='filter-buttons'>
-                <button onClick={()=> setRemoveFilter(true)}>remove filters</button>
-                <button onClick={()=> setGreyScaleBoolean('grayscale')}>apply grayscale</button>
-                <button onClick={()=> setBlurBoolean('blur')}>apply blur</button>
-                <button onClick={(e)=> download(e)}>
+                <button 
+                    onClick={()=> setRemoveFilter('remove')}
+                    disabled={changeEvent === undefined}>
+                        remove filters
+                </button>
+                <button 
+                    onClick={()=> setGreyScaleBoolean('grayscale')}
+                    disabled={changeEvent === undefined}>
+                        apply grayscale</button>
+                <button 
+                    onClick={()=> setBlurBoolean('blur')}
+                    disabled={changeEvent === undefined}>
+                        apply blur</button>
+                <button 
+                    onClick={(e)=> download(e)}
+                    disabled={changeEvent === undefined}>
                     download
                 </button>
             </div>
