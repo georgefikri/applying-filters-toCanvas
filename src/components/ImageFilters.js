@@ -117,24 +117,24 @@ function ImageFilter() {
                     <button 
                         onClick={()=> setButtonString('Vintage')}
                         disabled={changeEvent === undefined}
-                        className={buttonString === 'Vintage' &&  'active'}
+                        className={buttonString === 'Vintage' ?  'active' : undefined}
                         >
                             Vintage
                     </button>
                     <button 
                         onClick={()=> setButtonString('grayscale')}
                         disabled={changeEvent === undefined}
-                        className={buttonString === 'grayscale' &&  'active'}>
-                             Grayscale</button>
+                        className={buttonString === 'grayscale' ?  'active' : undefined}>
+                            Grayscale</button>
                     <button 
                         onClick={()=> setButtonString('blur')}
                         disabled={changeEvent === undefined}
-                        className={buttonString === 'blur' &&  'active'}>
-                             Blur</button>
+                        className={buttonString === 'blur' ?  'active' : undefined}>
+                            Blur</button>
                     <button 
                         onClick={(e)=> download(e)}
                         disabled={changeEvent === undefined}>
-                        Download
+                            Download
                     </button>
                 </div>
     </div>
