@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing button should do snapshot 1`] = `
+exports[`testing file upload should do snapshot 1`] = `
 <div
   className="d-flex"
 >
@@ -12,6 +12,7 @@ exports[`testing button should do snapshot 1`] = `
     >
       <input
         className="file-upload-field"
+        data-testid="input-file"
         id="uploadedImg"
         onChange={[Function]}
         type="file"

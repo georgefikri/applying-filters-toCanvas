@@ -9,11 +9,11 @@ let onClick = jest.fn();
 describe('testing file upload', () => {
   afterEach(cleanup);
 
-//   test('should button clicked successfully', () => {
-//     const { getByTestId } = render(<Button data-testid='button' onClick={()=> onClick()}/>);
-//     const linkElement = getByTestId('button');
-//     fireEvent.click(linkElement);
-//   });
+  test('should input file  clicked successfully', () => {
+    const { getByTestId } = render(<ImageFilters data-testid='input-file' onClick={()=> onClick()}/>);
+    const linkElement = getByTestId('input-file');
+    fireEvent.click(linkElement);
+  });
 
 
 
