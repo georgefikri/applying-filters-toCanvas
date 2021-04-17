@@ -32,8 +32,6 @@ function ImageFilter() {
         imgObj.src = event.target.result;
         src = event.target.result;
         fabric.Image.fromURL(src, function(img) {
-
-            console.log('filters before', img.filters)
             if(buttonString === 'Vintage') {
                 img.filters.shift()
                 img.filters.push(new fabric.Image.filters.Vintage());
@@ -47,14 +45,12 @@ function ImageFilter() {
 
                 img.filters.shift()
                 img.filters.push(new fabric.Image.filters.Grayscale())
-                console.log('grayscale', img.filters)
 
             } else if (buttonString === 'blur') {
                 img.filters.shift()
                 img.filters.push(new fabric.Image.filters.Blur({
                     blur: 0.5
                 }));
-                console.log('blur', img.filters)
 
             }
 
@@ -70,20 +66,16 @@ function ImageFilter() {
     useEffect(() => {
         if(buttonString === 'Vintage' || buttonString === 'grayscale' || buttonString === 'blur') {
             onChange(changeEvent)
-            console.log('inside useeffect')
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [buttonString])
 
 
 
-    console.log('changeEvent', changeEvent)
 
     const download = (e)=> {
     let getCanvasById =  document.getElementById("canvas");
     var image = getCanvasById.toDataURL("image/jpg");
-    console.log('img canvas', image)
-
     var link = document.createElement("a");
 
     document.body.appendChild(link); // for Firefox
