@@ -105,6 +105,7 @@ function ImageFilter() {
                         type="file" 
                         id="uploadedImg"
                         className="file-upload-field"
+                        data-testid='input-file'
                         />
                 </div>
 

@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing button should do snapshot 1`] = `
+<div
+  className="d-flex"
+>
+  <div
+    className="canvas-wrapper"
+  >
+    <div
+      className="file-upload-wrapper"
+    >
+      <input
+        className="file-upload-field"
+        id="uploadedImg"
+        onChange={[Function]}
+        type="file"
+      />
+    </div>
+    <canvas
+      id="canvas"
+    />
+  </div>
+  <div
+    className="filter-buttons"
+  >
+    <button
+      className={false}
+      disabled={true}
+      onClick={[Function]}
+    >
+      Vintage
+    </button>
+    <button
+      className={false}
+      disabled={true}
+      onClick={[Function]}
+    >
+      Grayscale
+    </button>
+    <button
+      className={false}
+      disabled={true}
+      onClick={[Function]}
+    >
+      Blur
+    </button>
+    <button
+      disabled={true}
+      onClick={[Function]}
+    >
+      Download
+    </button>
+  </div>
+</div>
+`;
